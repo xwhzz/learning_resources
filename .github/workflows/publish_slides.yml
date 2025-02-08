@@ -24,26 +24,19 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install jupyter nbconvert
+        pip install jupyter nbconvert jinja2
 
     - name: Convert notebooks to slides
       run: |
         mkdir slides
-        for notebook in *.ipynb; do
+        for notebook in notebooks/*.ipynb; do
           # Convert each notebook into HTML slides
           jupyter nbconvert --to slides --output "./slides/$(basename ${notebook} .ipynb)" "$notebook"
         done
 
     - name: Create index.html
       run: |
-        # Create index.html that links to all the slides
-        echo "<html><body><h1>Slides List: </h1><ul>" > slides/index.html
-        for notebook in *.ipynb; do
-          # Add a link to each generated slide page in the index
-          notebook_name=$(basename "$notebook" .ipynb)
-          echo "<li><a href='./${notebook_name}.slides.html'>${notebook_name}</a></li>" >> slides/index.html
-        done
-        echo "</ul></body></html>" >> slides/index.html
+        python scripts/gen.py
 
     - name: Deploy slides to GitHub Pages
       run: |
