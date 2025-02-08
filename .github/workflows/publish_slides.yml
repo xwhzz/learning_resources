@@ -29,7 +29,7 @@ jobs:
         mkdir slides
         for notebook in notebooks/*.ipynb; do
           # Convert each notebook into HTML slides
-          jupyter nbconvert --to slides --output "./slides/$(basename ${notebook} .ipynb)" "$notebook"
+          jupyter nbconvert --to slides --output "../slides/$(basename ${notebook} .ipynb)" "$notebook"
         done
 
     - name: Create index.html
