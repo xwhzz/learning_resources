@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - '*.ipynb'
   workflow_dispatch:
 
 jobs:
