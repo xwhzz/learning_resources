@@ -31,7 +31,7 @@ jobs:
         mkdir slides
         for notebook in *.ipynb; do
           # Convert each notebook into HTML slides
-          jupyter nbconvert --to slides --output "./slides/$(basename ${notebook} .ipynb).slides.html" "$notebook"
+          jupyter nbconvert --to slides --output "./slides/$(basename ${notebook} .ipynb)" "$notebook"
         done
 
     - name: Create index.html
@@ -54,4 +54,4 @@ jobs:
         mv slides/* .
         git add .
         git commit -m "Publish slides"
-        git push -f https://${{ secrets.TOKEN }}@github.com/${{ github.repository }}.git gh-pages
+        git push -f https://${{ secrets.TOKEN }}@github.com/${{ github.repository }} gh-pages
